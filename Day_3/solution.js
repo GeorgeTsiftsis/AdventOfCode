@@ -21,4 +21,26 @@ inputFile.split(/\r?\n/).forEach(line => {
         }
     }
 });
-console.log(` First solution is ${sum}`);
+console.log(`First solution is ${sum}`);
+
+let sum2 = 0;
+const input = inputFile.split("\n").filter((word) => word != ""); 
+
+for (let i = 0; i < input.length; i += 3) {  // avoid duplicates
+    const first = [...input[i]];
+    const second = input[i + 1];
+    const third = input[i + 2];
+    let breakTheBlock = false;
+
+first.forEach((element) => {
+    if (second.includes(element) && third.includes(element) && !breakTheBlock) {
+        breakTheBlock = true;
+        if (element == element.toLocaleLowerCase()) {
+          sum2 += element.charCodeAt(0) - 96;
+        } else {
+          sum2 += element.charCodeAt(0) - 38;
+        }
+    }
+});
+}
+console.log(`The second solution is ${sum2}`);
