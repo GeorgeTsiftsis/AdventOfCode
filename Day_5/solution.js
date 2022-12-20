@@ -1,6 +1,7 @@
 const fs = require("fs")
 const input = fs.readFileSync("input.txt", "utf-8")
-let output;
+let output,
+    output2;
 const lines = input.replace(/\r/g, "")
 const [rawStacks, rawMoves] = lines.split("\n\n").map((x) => x.split('\n'));
 const parsedStacks = rawStacks.map((line) => 
@@ -50,5 +51,21 @@ function part1() {
     output = solution
 }
 
+function part2() {
+    const localStacks = JSON.parse(JSON.stringify(stacks));
+    for (const move of moves) {
+      const crates = localStacks[move.from].splice(-move.count, move.count);
+      localStacks[move.to] = localStacks[move.to].concat(crates);
+    }
+    const solution = indexes.map((value) => {
+          const stack = localStacks[value];
+          return stack[stack.length - 1];
+        })
+        .join("");
+        output2 = solution
+  }
+
 part1()
+part2()
 console.log(` The first solution is ${output}`);
+console.log(` The second solution is ${output2}`);
